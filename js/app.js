@@ -285,6 +285,42 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// Canvas scaling for mobile
+function scaleCanvas() {
+    var wrapper = document.getElementById('canvas-wrapper');
+    var canvasEl = document.querySelector('#canvas canvas');
+    if (!wrapper || !canvasEl) return;
+    var parentWidth = wrapper.parentElement.clientWidth;
+    var scale = Math.min(1, parentWidth / 505);
+    canvasEl.style.transform = 'scale(' + scale + ')';
+    wrapper.style.width = Math.floor(505 * scale) + 'px';
+    wrapper.style.height = Math.floor(606 * scale) + 'px';
+}
+
+window.addEventListener('resize', scaleCanvas);
+
+// Touch swipe detection
+var touchStartX = 0, touchStartY = 0;
+
+document.getElementById('canvas-wrapper').addEventListener('touchstart', function(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    e.preventDefault();
+}, { passive: false });
+
+document.getElementById('canvas-wrapper').addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    var absDx = Math.abs(dx), absDy = Math.abs(dy);
+    if (Math.max(absDx, absDy) < 20) return;
+    if (absDx > absDy) {
+        player.handleInput(dx > 0 ? 'right' : 'left');
+    } else {
+        player.handleInput(dy > 0 ? 'down' : 'up');
+    }
+    e.preventDefault();
+}, { passive: false });
+
 
 $(document).ready(function(){
     // User select
@@ -301,11 +337,29 @@ $(document).ready(function(){
             $('.sectionTwo').addClass('hide');
             $('.sectionThree').removeClass('hide');
             Engine();
+            setTimeout(scaleCanvas, 50);
         }
         else {
             alert('Select Avatar');
         }
     });
+
+    // D-pad controls
+    function addDpadBtn(id, direction) {
+        var btn = document.getElementById(id);
+        if (!btn) return;
+        btn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            player.handleInput(direction);
+        }, { passive: false });
+        btn.addEventListener('click', function() {
+            player.handleInput(direction);
+        });
+    }
+    addDpadBtn('btnUp', 'up');
+    addDpadBtn('btnDown', 'down');
+    addDpadBtn('btnLeft', 'left');
+    addDpadBtn('btnRight', 'right');
 
     // Section shows
     $('.sectionOne').on('click','button',function(){

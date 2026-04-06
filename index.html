@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>My Game</title>
 
@@ -56,8 +56,25 @@
                 </div>
 
                 <div class="sectionThree hide">
-                    <div id="canvas"></div>
-
+                    <div id="canvas-wrapper">
+                        <div id="canvas"></div>
+                    </div>
+                    <div class="mobile-score">
+                        <span>Score: <span class="score">0</span></span>
+                        &nbsp;&nbsp;
+                        <span>Lives: <span class="lives">5</span></span>
+                    </div>
+                    <div class="mobile-controls" id="mobileControls">
+                        <div class="dpad">
+                            <button class="dpad-btn dpad-up" id="btnUp">&#9650;</button>
+                            <div class="dpad-middle">
+                                <button class="dpad-btn dpad-left" id="btnLeft">&#9664;</button>
+                                <div class="dpad-center"></div>
+                                <button class="dpad-btn dpad-right" id="btnRight">&#9654;</button>
+                            </div>
+                            <button class="dpad-btn dpad-down" id="btnDown">&#9660;</button>
+                        </div>
+                    </div>
             </div>
 
                     <div class="sectionFive hide">
