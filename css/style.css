@@ -140,3 +140,123 @@ h4 {
     display: block;
     margin: 15px;
 }
+
+/* Canvas scaling wrapper */
+#canvas-wrapper {
+    display: inline-block;
+    overflow: hidden;
+    touch-action: none;
+}
+
+#canvas {
+    display: block;
+    transform-origin: top left;
+}
+
+/* Mobile D-pad controls */
+.mobile-controls {
+    display: none;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.dpad {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.dpad-middle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+.dpad-btn {
+    width: 65px;
+    height: 65px;
+    background: rgba(255, 218, 0, 0.12);
+    border: 2px solid #ffda00;
+    color: #ffda00;
+    font-size: 22px;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.dpad-btn:active {
+    background: rgba(255, 218, 0, 0.45);
+    transform: scale(0.93);
+}
+
+.dpad-center {
+    width: 65px;
+    height: 65px;
+}
+
+/* Mobile score display (inside game area) */
+.mobile-score {
+    display: none;
+    font-size: 11px;
+    margin: 8px 0 4px;
+    letter-spacing: 0.1em;
+}
+
+/* Mobile layout */
+@media (max-width: 767px) {
+    body {
+        padding-top: 15px;
+    }
+
+    /* Hide instructions sidebar */
+    .col-sm-3:first-of-type {
+        display: none;
+    }
+
+    /* Full-width game column */
+    .col-sm-6 {
+        width: 100% !important;
+        padding: 0 8px;
+    }
+
+    /* Hide right scoreboard column (shown inline instead) */
+    .col-sm-3:last-of-type {
+        display: none;
+    }
+
+    /* Show mobile-only elements */
+    .mobile-controls {
+        display: block;
+    }
+
+    .mobile-score {
+        display: block;
+    }
+
+    h1 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 10px;
+        margin: 10px;
+    }
+
+    .btn-default {
+        padding: 10px 20px;
+        font-size: 10px;
+    }
+
+    .playerSelect li {
+        width: 35%;
+        margin: 3%;
+    }
+}
