@@ -2,17 +2,38 @@
 @Author : PAWAN GUJRAL
 */
 
+// Difficulty: 'easy' or 'hard' — set before game entities are created
+var gameDifficulty = 'easy';
 
+// Game entity globals — initialized in initGameObjects() when Start Game is clicked
+var allEnemies, player, items, explosion;
+
+// Difficulty config
+var difficultyConfig = {
+    easy: { enemyCount: 3, enemySpeed: 200, lives: 5 },
+    hard: { enemyCount: 7, enemySpeed: 550, lives: 3 }
+};
+
+function initGameObjects() {
+    var cfg = difficultyConfig[gameDifficulty];
+    allEnemies = [];
+    for (var i = 0; i < cfg.enemyCount; i++) {
+        allEnemies.push(new Enemy());
+    }
+    player = new Player();
+    items = new Items();
+    explosion = new Explosion();
+}
 
 // Enemies our player must avoid
-var Enemy = function() { 
+var Enemy = function() {
     // Enemy Positions
     this.enemyX = [-100, -200, -400];
     this.enemyY = [50,140,230,320];
     this.sprite = 'images/enemy-bug.png';
     this.x = this.enemyX[Math.floor(Math.random() * this.enemyX.length)];
     this.y = this.enemyY[Math.floor(Math.random() * this.enemyY.length)];
-    this.speed = 400; // MAKE DEFAULT SPEED FOR BUGS
+    this.speed = difficultyConfig[gameDifficulty].enemySpeed;
 };
  
 Enemy.prototype.update = function(dt) {
@@ -42,7 +63,7 @@ var Player = function(){
     this.x = 200;
     this.y = 410;
     this.score = 0;
-    this.lives = 5;
+    this.lives = difficultyConfig[gameDifficulty].lives;
 
     // show default score & lives at screen
     $('.lives').text(this.lives);
@@ -265,15 +286,6 @@ Explosion.prototype.render = function(){
 
 };
 
-var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()];
-
-var player = new Player();
-
-var items = new Items();
-
-var explosion = new Explosion();
-
-
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -328,12 +340,21 @@ $(document).ready(function(){
         $('.playerSelect li').removeClass('active'); 
         $(this).addClass('active');
     }); 
+    // Difficulty selector toggle
+    $('.difficultySelect').on('click', '.diff-btn', function() {
+        $('.diff-btn').removeClass('active');
+        $(this).addClass('active');
+        gameDifficulty = $(this).data('diff');
+    });
+
     // start GAME
     $('#startGame').on('click',function(){
 
         var activeCls = $('.playerSelect li').hasClass('active');
         if(activeCls)
         {
+            gameDifficulty = $('.diff-btn.active').data('diff') || 'easy';
+            initGameObjects();
             $('.sectionTwo').addClass('hide');
             $('.sectionThree').removeClass('hide');
             Engine();

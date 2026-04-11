@@ -118,6 +118,31 @@ h4 {
 .sectionTwo {
 
 }
+
+.difficultySelect {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.diff-btn {
+    min-width: 100px;
+    letter-spacing: 0.15em;
+}
+
+.diff-btn.active {
+    background: #ffda00;
+    color: #333;
+    border-color: #ffda00;
+}
+
+.diff-label {
+    display: block;
+    font-size: 9px;
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
 .scoreBoard {
         margin-top: 50px;
 }
